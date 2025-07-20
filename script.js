@@ -35,6 +35,7 @@ class PomodoroTimer {
         this.focusInput = document.getElementById('focusInput');
         this.setFocusBtn = document.getElementById('setFocusBtn');
         this.focusDisplay = document.getElementById('focusDisplay');
+        this.modeAnimation = document.getElementById('modeAnimation');
     }
     
     setupEventListeners() {
@@ -108,6 +109,7 @@ class PomodoroTimer {
         this.updateDisplay();
         this.updateStatus('Work Time');
         this.updateProgress();
+        this.showModeAnimation('work');
         
         // Update button states
         this.workModeButton.classList.add('active');
@@ -122,6 +124,7 @@ class PomodoroTimer {
         this.updateDisplay();
         this.updateStatus('Break Time');
         this.updateProgress();
+        this.showModeAnimation('rest');
         
         // Update button states
         this.restModeButton.classList.add('active');
@@ -163,6 +166,7 @@ class PomodoroTimer {
         this.updateStatus();
         this.updateProgress();
         this.sessionCountElement.textContent = this.sessionCount;
+        this.showModeAnimation('work'); // Default to work mode animation
         
         // Reset mode buttons to work mode
         this.workModeButton.classList.add('active');
@@ -276,6 +280,21 @@ class PomodoroTimer {
             oscillator.stop(audioContext.currentTime + 0.3);
         } catch (error) {
             console.log('Audio not supported');
+        }
+    }
+
+    showModeAnimation(mode) {
+        if (mode === 'work') {
+            this.modeAnimation.innerHTML = `
+                <span class="book-emoji" style="animation-delay:0s;">📚</span>
+                <span class="book-emoji" style="animation-delay:0.1s;">📖</span>
+                <span class="book-emoji" style="animation-delay:0.2s;">📚</span>
+            `;
+        } else if (mode === 'rest') {
+            this.modeAnimation.innerHTML = `
+                <span class="rest-emoji" style="animation-delay:0s;">☕</span>
+                <span class="rest-emoji" style="animation-delay:0.1s;">🛌</span>
+            `;
         }
     }
 }

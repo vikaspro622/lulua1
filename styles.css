@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-    background: red;
+    background: white;
     border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -339,4 +339,27 @@ h1 {
 .time.complete {
     animation: pulse 0.5s ease-in-out;
     color: #e74c3c;
+} 
+
+.mode-animation {
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    gap: 1rem;
+}
+
+.book-emoji, .rest-emoji {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    animation: popIn 0.5s forwards;
+}
+
+@keyframes popIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 } 
