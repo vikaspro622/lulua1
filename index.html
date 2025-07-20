@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="container">
+        <div id="focusDisplay" class="focus-display" style="display:none;"></div>
         <h1>🍅 Pomodoro Timer</h1>
         
         <div class="timer-display">
@@ -53,6 +54,15 @@
                 <span id="notificationText"></span>
                 <button id="closeNotification">×</button>
             </div>
+        </div>
+    </div>
+    
+    <!-- Focus Modal -->
+    <div id="focusModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <label for="focusInput">What are you focusing on?</label>
+            <input type="text" id="focusInput" placeholder="Enter your focus..." />
+            <button id="setFocusBtn" class="btn btn-primary">Set</button>
         </div>
     </div>
     

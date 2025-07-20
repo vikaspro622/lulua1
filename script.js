@@ -31,15 +31,23 @@ class PomodoroTimer {
         this.notification = document.getElementById('notification');
         this.notificationText = document.getElementById('notificationText');
         this.closeNotification = document.getElementById('closeNotification');
+        this.focusModal = document.getElementById('focusModal');
+        this.focusInput = document.getElementById('focusInput');
+        this.setFocusBtn = document.getElementById('setFocusBtn');
+        this.focusDisplay = document.getElementById('focusDisplay');
     }
     
     setupEventListeners() {
-        this.startButton.addEventListener('click', () => this.start());
+        this.startButton.addEventListener('click', () => this.handleStartWithFocus());
         this.pauseButton.addEventListener('click', () => this.pause());
         this.resetButton.addEventListener('click', () => this.reset());
         this.workModeButton.addEventListener('click', () => this.setWorkMode());
         this.restModeButton.addEventListener('click', () => this.setRestMode());
         this.closeNotification.addEventListener('click', () => this.hideNotification());
+        this.setFocusBtn.addEventListener('click', () => this.setFocus());
+        this.focusInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') this.setFocus();
+        });
         
         // Settings inputs
         this.workTimeInput.addEventListener('change', () => {
@@ -65,6 +73,30 @@ class PomodoroTimer {
         // Request notification permission
         if ('Notification' in window) {
             Notification.requestPermission();
+        }
+    }
+
+    handleStartWithFocus() {
+        if (!this.isRunning && !this.focusDisplay.textContent) {
+            this.showFocusModal();
+        } else {
+            this.start();
+        }
+    }
+
+    showFocusModal() {
+        this.focusModal.style.display = 'flex';
+        this.focusInput.value = '';
+        setTimeout(() => this.focusInput.focus(), 100);
+    }
+
+    setFocus() {
+        const value = this.focusInput.value.trim();
+        if (value) {
+            this.focusDisplay.textContent = `Focusing on: ${value}`;
+            this.focusDisplay.style.display = 'block';
+            this.focusModal.style.display = 'none';
+            this.start();
         }
     }
 
@@ -135,6 +167,9 @@ class PomodoroTimer {
         // Reset mode buttons to work mode
         this.workModeButton.classList.add('active');
         this.restModeButton.classList.remove('active');
+        // Hide focus display
+        this.focusDisplay.textContent = '';
+        this.focusDisplay.style.display = 'none';
     }
     
     completeSession() {
